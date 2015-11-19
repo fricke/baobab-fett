@@ -7,7 +7,31 @@ import BaobabFett from './components/BaobabFett';
 let store = new Baobab({
     fett: {
         action: 'bounty+hunting',
-        where: 'empire'
+        where: 'empire',
+        fett: {
+            action: 'bounty+hunting',
+            where: 'empire',
+            fett: {
+                action: 'bounty+hunting',
+                where: 'empire',
+                fett: {
+                    action: 'bounty+hunting',
+                    where: 'empire',
+                    fett: {
+                        action: 'bounty+hunting',
+                        where: 'empire',
+                        fett: {
+                            action: 'bounty+hunting',
+                            where: 'empire',
+                            fett: {
+                                action: 'bounty+hunting',
+                                where: 'empire'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 });
 

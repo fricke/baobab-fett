@@ -60,7 +60,8 @@ let styles = {
         height: 300,
         width: 500,
         borderTop: '1px solid #ccc',
-        borderLeft: '1px solid #ccc'
+        borderLeft: '1px solid #ccc',
+        overflow: 'scroll'
     },
     toggle: {
         position: 'absolute',

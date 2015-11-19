@@ -3006,7 +3006,8 @@ var styles = {
         height: 300,
         width: 500,
         borderTop: '1px solid #ccc',
-        borderLeft: '1px solid #ccc'
+        borderLeft: '1px solid #ccc',
+        overflow: 'scroll'
     },
     toggle: {
         position: 'absolute',
@@ -3210,7 +3211,31 @@ var _componentsBaobabFett2 = _interopRequireDefault(_componentsBaobabFett);
 var store = new _baobab2['default']({
     fett: {
         action: 'bounty+hunting',
-        where: 'empire'
+        where: 'empire',
+        fett: {
+            action: 'bounty+hunting',
+            where: 'empire',
+            fett: {
+                action: 'bounty+hunting',
+                where: 'empire',
+                fett: {
+                    action: 'bounty+hunting',
+                    where: 'empire',
+                    fett: {
+                        action: 'bounty+hunting',
+                        where: 'empire',
+                        fett: {
+                            action: 'bounty+hunting',
+                            where: 'empire',
+                            fett: {
+                                action: 'bounty+hunting',
+                                where: 'empire'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 });
 
