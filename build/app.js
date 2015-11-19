@@ -2913,6 +2913,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -2939,27 +2943,51 @@ var BaobabFett = (function (_React$Component) {
     _inherits(BaobabFett, _React$Component);
 
     function BaobabFett(props, context) {
+        var _this = this;
+
         _classCallCheck(this, _BaobabFett);
 
         _get(Object.getPrototypeOf(_BaobabFett.prototype), 'constructor', this).call(this, props, context);
+
+        this.toggleView = function () {
+            _this.setState({
+                open: !_this.state.open
+            });
+        };
+
         (0, _actionsSourceActions.setSource)(_store2['default'], this.props.store);
+        this.state = {
+            open: true
+        };
     }
 
     _createClass(BaobabFett, [{
         key: 'render',
         value: function render() {
+            var open = this.state.open;
+
+            var localStyles = _lodash2['default'].cloneDeep(styles);
+            if (!open) {
+                localStyles.body.height = 30;
+                localStyles.toggle.top = '.5em';
+                localStyles.body.cursor = 'pointer';
+            }
             return _react2['default'].createElement(
                 'section',
-                { ref: 'app', style: styles.body },
+                { ref: 'app', style: localStyles.body, onClick: !open && this.toggleView },
                 _react2['default'].createElement(
-                    _reactResizable.ResizableBox,
-                    { className: 'resizable--large', width: 500, height: 300, minConstraints: [200, 300], maxContstrains: [800, 300] },
-                    _react2['default'].createElement(_TreePanel2['default'], { ref: 'treePanel', style: styles.treePanel })
+                    'a',
+                    { ref: 'toggle', style: localStyles.toggle, onClick: open && this.toggleView, href: '#' },
+                    open ? '--' : '+'
                 ),
-                _react2['default'].createElement(
-                    _reactResizable.ResizableBox,
-                    { className: 'resiable--small', width: 500, height: 300, minConstraints: [200, 300], maxContstrains: [800, 300] },
-                    _react2['default'].createElement(_WatchPanel2['default'], { ref: 'watchPanel' })
+                open && _react2['default'].createElement(
+                    'div',
+                    null,
+                    _react2['default'].createElement(
+                        _reactResizable.ResizableBox,
+                        { className: 'resizable--large', width: 500, height: 300, minConstraints: [200, 300], maxContstrains: [800, 300] },
+                        _react2['default'].createElement(_TreePanel2['default'], { ref: 'treePanel', style: localStyles.treePanel })
+                    )
                 )
             );
         }
@@ -2974,24 +3002,31 @@ var styles = {
     body: {
         position: 'fixed',
         bottom: 0,
-        left: 0,
         right: 0,
         height: 300,
-        width: '100%'
+        width: 500,
+        borderTop: '1px solid #ccc',
+        borderLeft: '1px solid #ccc'
+    },
+    toggle: {
+        position: 'absolute',
+        right: '1em',
+        textDecoration: 'none',
+        top: '1em',
+        cursor: 'pointer',
+        zIndex: 100
     },
     treePanel: {
         borderRight: '1px solid #ccc',
-        borderTop: '1px solid #ccc',
         height: '100%',
-        paddingLeft: '1em',
-        paddingTop: '.5em'
+        paddingLeft: '1em'
     }
 };
 
 exports['default'] = BaobabFett;
 module.exports = exports['default'];
 
-},{"../actions/SourceActions":"/Users/cfricke/Workspace/baobab-fett/src/actions/SourceActions.js","../store":"/Users/cfricke/Workspace/baobab-fett/src/store.js","./TreePanel":"/Users/cfricke/Workspace/baobab-fett/src/components/TreePanel.js","./WatchPanel":"/Users/cfricke/Workspace/baobab-fett/src/components/WatchPanel.js","baobab-react/decorators":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/decorators.js","react":"react","react-resizable":"/Users/cfricke/Workspace/baobab-fett/node_modules/react-resizable/index.js"}],"/Users/cfricke/Workspace/baobab-fett/src/components/Button.js":[function(require,module,exports){
+},{"../actions/SourceActions":"/Users/cfricke/Workspace/baobab-fett/src/actions/SourceActions.js","../store":"/Users/cfricke/Workspace/baobab-fett/src/store.js","./TreePanel":"/Users/cfricke/Workspace/baobab-fett/src/components/TreePanel.js","./WatchPanel":"/Users/cfricke/Workspace/baobab-fett/src/components/WatchPanel.js","baobab-react/decorators":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/decorators.js","lodash":"lodash","react":"react","react-resizable":"/Users/cfricke/Workspace/baobab-fett/node_modules/react-resizable/index.js"}],"/Users/cfricke/Workspace/baobab-fett/src/components/Button.js":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
