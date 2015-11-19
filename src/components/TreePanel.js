@@ -1,7 +1,13 @@
 import React from 'react';
 import Button from './Button';
+import {branch} from 'baobab-react/decorators';
 
-class Panel extends React.Component {
+@branch({
+    cursors: {
+        source: ['source']
+    }
+})
+class TreePanel extends React.Component {
 
     constructor() {
         super(...arguments);
@@ -23,5 +29,5 @@ class Panel extends React.Component {
     }
 }
 
-export default Panel;
+export default TreePanel;
 

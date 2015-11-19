@@ -1,4 +1,691 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab/dist/cursor.js":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/decorators.js":[function(require,module,exports){
+/**
+ * Baobab-React Decorators
+ * ========================
+ *
+ * ES7 decorators sugar for higher order components.
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports.root = root;
+exports.branch = branch;
+
+var _higherOrderJs = require('./higher-order.js');
+
+function root(tree) {
+  return function (Component) {
+    return (0, _higherOrderJs.root)(Component, tree);
+  };
+}
+
+function branch(specs) {
+  return function (Component) {
+    return (0, _higherOrderJs.branch)(Component, specs);
+  };
+}
+},{"./higher-order.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/higher-order.js"}],"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/higher-order.js":[function(require,module,exports){
+/**
+ * Baobab-React Higher Order Component
+ * ====================================
+ *
+ * ES6 higher order component to enchance one's component.
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+exports.root = root;
+exports.branch = branch;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _baobab = require('baobab');
+
+var _baobab2 = _interopRequireDefault(_baobab);
+
+var _utilsHelpersJs = require('./utils/helpers.js');
+
+var _utilsPropTypesJs = require('./utils/prop-types.js');
+
+var _utilsPropTypesJs2 = _interopRequireDefault(_utilsPropTypesJs);
+
+var makeError = _baobab2['default'].helpers.makeError;
+
+/**
+ * Root component
+ */
+
+function root(Component, tree) {
+  if (!(tree instanceof _baobab2['default'])) throw makeError('baobab-react:higher-order.root: given tree is not a Baobab.', { target: tree });
+
+  var componentDisplayName = Component.name || Component.displayName || 'Component';
+
+  var ComposedComponent = (function (_React$Component) {
+    _inherits(ComposedComponent, _React$Component);
+
+    function ComposedComponent() {
+      _classCallCheck(this, ComposedComponent);
+
+      _get(Object.getPrototypeOf(ComposedComponent.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(ComposedComponent, [{
+      key: 'getChildContext',
+
+      // Handling child context
+      value: function getChildContext() {
+        return {
+          tree: tree
+        };
+      }
+
+      // Render shim
+    }, {
+      key: 'render',
+      value: function render() {
+        return _react2['default'].createElement(Component, this.props);
+      }
+    }], [{
+      key: 'displayName',
+      value: 'Rooted' + componentDisplayName,
+      enumerable: true
+    }, {
+      key: 'childContextTypes',
+      value: {
+        tree: _utilsPropTypesJs2['default'].baobab
+      },
+      enumerable: true
+    }]);
+
+    return ComposedComponent;
+  })(_react2['default'].Component);
+
+  return ComposedComponent;
+}
+
+/**
+ * Branch component
+ */
+
+function branch(Component) {
+  var mapping = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+  var componentDisplayName = Component.name || Component.displayName || 'Component';
+
+  var ComposedComponent = (function (_React$Component2) {
+    _inherits(ComposedComponent, _React$Component2);
+
+    _createClass(ComposedComponent, [{
+      key: 'getChildContext',
+
+      // Passing the component's cursors through context
+      value: function getChildContext() {
+        return this.cursors ? {
+          cursors: this.cursors
+        } : {};
+      }
+
+      // Building initial state
+    }], [{
+      key: 'displayName',
+      value: 'Branched' + componentDisplayName,
+      enumerable: true
+    }, {
+      key: 'contextTypes',
+      value: {
+        tree: _utilsPropTypesJs2['default'].baobab
+      },
+      enumerable: true
+    }, {
+      key: 'childContextTypes',
+      value: {
+        cursors: _utilsPropTypesJs2['default'].cursors
+      },
+      enumerable: true
+    }]);
+
+    function ComposedComponent(props, context) {
+      _classCallCheck(this, ComposedComponent);
+
+      _get(Object.getPrototypeOf(ComposedComponent.prototype), 'constructor', this).call(this, props, context);
+
+      if (mapping.cursors) {
+        var solvedMapping = (0, _utilsHelpersJs.solveMapping)(mapping.cursors, props, context);
+
+        if (!solvedMapping) throw makeError('baobab-react:higher-order.branch: given cursors mapping is invalid (check the "' + displayName + '" component).', { mapping: solvedMapping });
+
+        // Creating the watcher
+        this.watcher = this.context.tree.watch(solvedMapping);
+        this.cursors = this.watcher.getCursors();
+        this.state = this.watcher.get();
+      }
+    }
+
+    // On component mount
+
+    _createClass(ComposedComponent, [{
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        if (!this.watcher) return;
+
+        var handler = (function () {
+          if (this.watcher) this.setState(this.watcher.get());
+        }).bind(this);
+
+        this.watcher.on('update', handler);
+      }
+
+      // Render shim
+    }, {
+      key: 'render',
+      value: function render() {
+        var tree = this.context.tree,
+            suppl = {};
+
+        // Binding actions if any
+        if (mapping.actions) {
+          suppl.actions = {};
+
+          Object.keys(mapping.actions).forEach(function (k) {
+            suppl.actions[k] = mapping.actions[k].bind(tree, tree);
+          });
+        }
+
+        return _react2['default'].createElement(Component, _extends({}, this.props, suppl, this.state));
+      }
+
+      // On component unmount
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        if (!this.watcher) return;
+
+        // Releasing watcher
+        this.watcher.release();
+        this.watcher = null;
+      }
+
+      // On new props
+    }, {
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(props) {
+        if (!this.watcher || !mapping.cursors) return;
+
+        var solvedMapping = (0, _utilsHelpersJs.solveMapping)(mapping.cursors, props, this.context);
+
+        if (!solvedMapping) throw makeError('baobab-react:higher-order.branch: given mapping is invalid (check the "' + displayName + '" component).', { mapping: solvedMapping });
+
+        // Refreshing the watcher
+        this.watcher.refresh(solvedMapping);
+        this.cursors = this.watcher.getCursors();
+        this.setState(this.watcher.get());
+      }
+    }]);
+
+    return ComposedComponent;
+  })(_react2['default'].Component);
+
+  return ComposedComponent;
+}
+},{"./utils/helpers.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/helpers.js","./utils/prop-types.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/prop-types.js","baobab":"baobab","react":"react"}],"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/mixins.js":[function(require,module,exports){
+/**
+ * Baobab-React Mixins
+ * ====================
+ *
+ * Old style react mixins.
+ */
+'use strict';
+
+var PropTypes = require('./utils/prop-types.js'),
+    helpers = require('./utils/helpers.js'),
+    makeError = require('baobab').helpers.makeError;
+
+/**
+ * Helpers
+ */
+function displayName(instance) {
+  return (instance.constructor || {}).displayName || 'Component';
+}
+
+function bindActions(actions) {
+  var tree = this.context.tree,
+      suppl = {};
+
+  this.actions = {};
+
+  Object.keys(actions).forEach(function (k) {
+    this.actions[k] = actions[k].bind(tree, tree);
+  }, this);
+}
+
+/**
+ * Root mixin
+ */
+var RootMixin = {
+
+  // Component prop Type
+  propTypes: {
+    tree: PropTypes.baobab
+  },
+
+  // Context prop types
+  childContextTypes: {
+    tree: PropTypes.baobab
+  },
+
+  // Handling child context
+  getChildContext: function getChildContext() {
+    return {
+      tree: this.props.tree
+    };
+  }
+};
+
+/**
+ * Branch mixin
+ */
+var BranchMixin = {
+
+  // Context prop types
+  contextTypes: {
+    tree: PropTypes.baobab
+  },
+
+  // Building initial state
+  getInitialState: function getInitialState() {
+    var name = displayName(this);
+
+    if (this.actions) {
+      this.__actionsMapping = this.actions;
+      bindActions.call(this, this.__actionsMapping);
+    }
+
+    if (this.cursors) {
+      this.__cursorsMapping = this.cursors;
+
+      var solvedMapping = helpers.solveMapping(this.__cursorsMapping, this.props, this.context);
+
+      // The given cursors property should be valid
+      if (!solvedMapping) throw makeError('baobab-react:mixins.branch: given mapping is invalid (check the "' + name + '" component).', { mapping: solvedMapping });
+
+      // Creating the watcher
+      this.__watcher = this.context.tree.watch(solvedMapping);
+
+      // Binding cursors
+      this.cursors = this.__watcher.getCursors();
+
+      // Setting initial state
+      return this.__watcher.get();
+    }
+
+    return null;
+  },
+
+  // On component mount
+  componentWillMount: function componentWillMount() {
+    if (!this.__watcher) return;
+
+    var handler = (function () {
+      if (this.__watcher) this.setState(this.__watcher.get());
+    }).bind(this);
+
+    this.__watcher.on('update', handler);
+  },
+
+  // On component unmount
+  componentWillUnmount: function componentWillUnmount() {
+    if (!this.__watcher) return;
+
+    // Releasing facet
+    this.__watcher.release();
+    this.__watcher = null;
+  },
+
+  // On new props
+  componentWillReceiveProps: function componentWillReceiveProps(props) {
+    if (!this.__watcher) return;
+
+    // Refreshing the watcher
+    var solvedMapping = helpers.solveMapping(this.__cursorsMapping, props, this.context);
+
+    if (!solvedMapping) throw makeError('baobab-react:mixins.branch: given mapping is invalid (check the "' + displayName(this) + '" component).', { mapping: solvedMapping });
+
+    this.__watcher.refresh(solvedMapping);
+    this.cursors = this.__watcher.getCursors();
+    this.setState(this.__watcher.get());
+  },
+
+  // On update
+  componentWillUpdate: function componentWillUpdate() {
+    if (this.__actionsMapping) bindActions.call(this, this.__actionsMapping);
+  }
+};
+
+// Exporting
+exports.root = RootMixin;
+exports.branch = BranchMixin;
+},{"./utils/helpers.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/helpers.js","./utils/prop-types.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/prop-types.js","baobab":"baobab"}],"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/helpers.js":[function(require,module,exports){
+/**
+ * Baobab-React Helpers
+ * =====================
+ *
+ * Miscellaneous helper functions.
+ */
+'use strict';
+
+var type = require('baobab').type;
+
+function solveMapping(mapping, props, context) {
+  if (typeof mapping === 'function') mapping = mapping(props, context);
+
+  return mapping;
+}
+
+module.exports = {
+  solveMapping: solveMapping
+};
+},{"baobab":"baobab"}],"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/prop-types.js":[function(require,module,exports){
+/**
+ * Baobab-React Custom Prop Types
+ * ===============================
+ *
+ * PropTypes used to propagate context safely.
+ */
+'use strict';
+
+var Baobab = require('baobab'),
+    Cursor = Baobab.Cursor,
+    type = Baobab.type;
+
+function errorMessage(propName, what) {
+  return 'prop type `' + propName + '` is invalid; it must be ' + what + '.';
+}
+
+var PropTypes = {};
+
+PropTypes.baobab = function (props, propName) {
+  if (!(propName in props)) return;
+
+  if (!(props[propName] instanceof Baobab)) return new Error(errorMessage(propName, 'a Baobab tree'));
+};
+
+PropTypes.cursors = function (props, propName) {
+  if (!(propName in props)) return;
+
+  var cursors = props[propName];
+
+  if (!type.object(cursors) || !Object.keys(cursors).every(function (k) {
+    return cursors[k] instanceof Cursor;
+  })) return new Error(errorMessage(propName, 'a cursors object'));
+};
+
+module.exports = PropTypes;
+},{"baobab":"baobab"}],"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/wrappers.js":[function(require,module,exports){
+/**
+ * Baobab-React Wrapper Component
+ * ===============================
+ *
+ * ES6 wrapper component.
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _baobab = require('baobab');
+
+var _baobab2 = _interopRequireDefault(_baobab);
+
+var _utilsPropTypesJs = require('./utils/prop-types.js');
+
+var _utilsPropTypesJs2 = _interopRequireDefault(_utilsPropTypesJs);
+
+var _utilsHelpersJs = require('./utils/helpers.js');
+
+var makeError = _baobab2['default'].helpers.makeError;
+
+/**
+ * Helpers
+ */
+function rootPass(props) {
+  var children = props.children;
+  var tree = props.tree;
+
+  var otherProps = _objectWithoutProperties(props, ['children', 'tree']);
+
+  return _extends({}, otherProps);
+}
+
+function branchPass(props, suppl, state) {
+  var actions = props.actions;
+  var children = props.children;
+  var cursors = props.cursors;
+
+  var otherProps = _objectWithoutProperties(props, ['actions', 'children', 'cursors']);
+
+  return _extends({}, otherProps, suppl, state);
+}
+
+function renderChildren(children, props) {
+  if (!children) return null;
+
+  if (!Array.isArray(children)) {
+    return _react2['default'].cloneElement(children, props);
+  } else {
+    var group = _react2['default'].Children.map(children, function (child) {
+      return _react2['default'].cloneElement(child, props);
+    });
+
+    return _react2['default'].createElement(
+      'span',
+      null,
+      group
+    );
+  }
+}
+
+/**
+ * Root wrapper
+ */
+
+var Root = (function (_React$Component) {
+  _inherits(Root, _React$Component);
+
+  function Root() {
+    _classCallCheck(this, Root);
+
+    _get(Object.getPrototypeOf(Root.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  /**
+   * Branch wrapper
+   */
+
+  _createClass(Root, [{
+    key: 'getChildContext',
+
+    // Handling child context
+    value: function getChildContext() {
+      return {
+        tree: this.props.tree
+      };
+    }
+
+    // Rendering children
+  }, {
+    key: 'render',
+    value: function render() {
+      return renderChildren(this.props.children, rootPass(this.props));
+    }
+  }], [{
+    key: 'propTypes',
+    value: {
+      tree: _utilsPropTypesJs2['default'].baobab
+    },
+    enumerable: true
+  }, {
+    key: 'childContextTypes',
+    value: {
+      tree: _utilsPropTypesJs2['default'].baobab
+    },
+    enumerable: true
+  }]);
+
+  return Root;
+})(_react2['default'].Component);
+
+exports.Root = Root;
+
+var Branch = (function (_React$Component2) {
+  _inherits(Branch, _React$Component2);
+
+  _createClass(Branch, [{
+    key: 'getChildContext',
+
+    // Passing the component's cursors through context
+    value: function getChildContext() {
+      return this.cursors ? {
+        cursors: this.cursors
+      } : {};
+    }
+
+    // Building initial state
+  }], [{
+    key: 'contextTypes',
+    value: {
+      tree: _utilsPropTypesJs2['default'].baobab
+    },
+    enumerable: true
+  }, {
+    key: 'childContextTypes',
+    value: {
+      cursors: _utilsPropTypesJs2['default'].cursors
+    },
+    enumerable: true
+  }]);
+
+  function Branch(props, context) {
+    _classCallCheck(this, Branch);
+
+    _get(Object.getPrototypeOf(Branch.prototype), 'constructor', this).call(this, props, context);
+
+    if (props.cursors) {
+      var solvedMapping = (0, _utilsHelpersJs.solveMapping)(props.cursors, props, context);
+
+      if (!solvedMapping) throw makeError('baobab-react:wrappers.branch: given mapping is invalid.', { mapping: solvedMapping });
+
+      // Creating the watcher
+      this.watcher = this.context.tree.watch(solvedMapping);
+      this.cursors = this.watcher.getCursors();
+      this.state = this.watcher.get();
+    }
+  }
+
+  // On component mount
+
+  _createClass(Branch, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      if (!this.watcher) return;
+
+      var handler = (function () {
+        if (this.watcher) this.setState(this.watcher.get());
+      }).bind(this);
+
+      this.watcher.on('update', handler);
+    }
+
+    // Render shim
+  }, {
+    key: 'render',
+    value: function render() {
+      var tree = this.context.tree,
+          actions = this.props.actions,
+          suppl = {};
+
+      // Binding actions if any
+      if (actions) {
+        suppl.actions = {};
+
+        Object.keys(actions).forEach(function (k) {
+          suppl.actions[k] = actions[k].bind(tree, tree);
+        });
+      }
+
+      return renderChildren(this.props.children, branchPass(this.props, suppl, this.state));
+    }
+
+    // On component unmount
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      if (!this.watcher) return;
+
+      // Releasing watcher
+      this.watcher.release();
+      this.watcher = null;
+    }
+
+    // On new props
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      if (!this.watcher) return;
+
+      var solvedMapping = (0, _utilsHelpersJs.solveMapping)(props.cursors, props, this.context);
+
+      if (!solvedMapping) throw makeError('baobab-react:wrappers.branch: given mapping is invalid.', { mapping: solvedMapping });
+
+      // Refreshing the watcher
+      this.watcher.refresh(solvedMapping);
+      this.cursors = this.watcher.getCursors();
+      this.setState(this.watcher.get());
+    }
+  }]);
+
+  return Branch;
+})(_react2['default'].Component);
+
+exports.Branch = Branch;
+},{"./utils/helpers.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/helpers.js","./utils/prop-types.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/prop-types.js","baobab":"baobab","react":"react"}],"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab/dist/cursor.js":[function(require,module,exports){
 /**
  * Baobab Cursors
  * ===============
@@ -74393,7 +75080,16 @@ module.exports = warning;
 },{"./emptyFunction":"/Users/cfricke/Workspace/baobab-fett/node_modules/react/node_modules/fbjs/lib/emptyFunction.js","_process":"/Users/cfricke/Workspace/baobab-fett/node_modules/browserify/node_modules/process/browser.js"}],"/Users/cfricke/Workspace/baobab-fett/noop.js":[function(require,module,exports){
 "use strict";
 
-},{}],"baobab":[function(require,module,exports){
+},{}],"baobab-react":[function(require,module,exports){
+module.exports = {
+  decorators: require('./dist-modules/decorators.js'),
+  higherOrder: require('./dist-modules/higher-order.js'),
+  mixins: require('./dist-modules/mixins.js'),
+  PropTypes: require('./dist-modules/utils/prop-types.js'),
+  wrappers: require('./dist-modules/wrappers.js')
+};
+
+},{"./dist-modules/decorators.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/decorators.js","./dist-modules/higher-order.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/higher-order.js","./dist-modules/mixins.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/mixins.js","./dist-modules/utils/prop-types.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/utils/prop-types.js","./dist-modules/wrappers.js":"/Users/cfricke/Workspace/baobab-fett/node_modules/baobab-react/dist-modules/wrappers.js"}],"baobab":[function(require,module,exports){
 /**
  * Baobab Data Structure
  * ======================

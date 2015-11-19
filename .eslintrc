@@ -36,7 +36,10 @@
         "quotes": [
             1,
             "single"
-        ]
+        ],
+        "react/jsx-no-duplicate-props": 1,
+        "react/no-did-mount-set-state": 1,
+        "react/no-did-update-set-state": 1
     },
     "env": {
         "node": true,
@@ -59,11 +62,10 @@
     },
     "extends": "eslint:recommended",
     "ecmaFeatures": {
-        "classes": true,
         "jsx": true,
-        "modules": true,
         "experimentalObjectRestSpread": true
     },
+    "parser": "babel-eslint",
     "plugins": [
         "react"
     ]
