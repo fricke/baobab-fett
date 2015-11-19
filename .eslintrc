@@ -1,0 +1,70 @@
+{
+    "rules": {
+        "eqeqeq": [2],
+        "vars-on-top": [2],
+        "eol-last": [2],
+        "no-eval": [2],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "no-console": [1],
+        "no-debugger": [1],
+        "no-var": [1],
+        "prefer-spread": [1],
+        "dot-notation": [1],
+        "yoda": [1],
+        "no-multi-spaces": [1],
+        "key-spacing": [1],
+        "quote-props": [
+            1,
+            "as-needed"
+        ],
+        "no-multiple-empty-lines": [
+            1,
+            {"max": 1}
+        ],
+        "no-trailing-spaces": [1],
+        "indent": [
+            1,
+            4
+        ],
+        "quotes": [
+            1,
+            "single"
+        ]
+    },
+    "env": {
+        "node": true,
+        "browser": true,
+        "es6": true,
+        "commonjs": true,
+        "jasmine": true,
+        "jest": true,
+        "jquery": true
+    },
+    globals: {
+        "exec": true,
+        "Highcharts": true,
+        "hopscotch": true,
+        "static_url": true,
+        "staticUrl": true,
+        "user": true,
+        "client_rollup": true,
+        "current_rollup": true
+    },
+    "extends": "eslint:recommended",
+    "ecmaFeatures": {
+        "classes": true,
+        "jsx": true,
+        "modules": true,
+        "experimentalObjectRestSpread": true
+    },
+    "plugins": [
+        "react"
+    ]
+}
