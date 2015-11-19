@@ -23,5 +23,5 @@ class Panel extends React.Component {
     }
 }
 
-module.exports = Panel;
+export default Panel;
 

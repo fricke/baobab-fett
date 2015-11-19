@@ -10,4 +10,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 },{"react":"react"}]},{},["/Users/cfricke/Workspace/baobab-fett/src/app.js"])
 
 
-//# sourceMappingURL=devtools.js.map
+//# sourceMappingURL=app.js.map

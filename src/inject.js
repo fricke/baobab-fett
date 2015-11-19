@@ -12,7 +12,7 @@
 
 /* global chrome */
 
-module.exports = function(scriptName, done) {
+export default function(scriptName, done) {
   var src = `
   // the prototype stuff is in case document.createElement has been modified
   var script = document.constructor.prototype.createElement.call(document, 'script');
