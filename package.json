@@ -2,7 +2,7 @@
   "name": "baobab-fett",
   "version": "0.0.1",
   "description": "A chrome dev plugin to monitor baobab state in a visual way.",
-  "main": "app.js",
+  "main": "./app.js",
   "scripts": {
     "test": "jest"
   },

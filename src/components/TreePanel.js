@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button';
+import Inspector from 'react-json-inspector';
 import {branch} from 'baobab-react/decorators';
 
 @branch({
@@ -17,13 +18,13 @@ class TreePanel extends React.Component {
     }
 
     render() {
+        let {
+            source,
+            style
+        } = this.props;
         return (
-            <div>
-                { <button>ok then</button> }
-                <Button onClick={this.tick}>Show me the money!</Button>
-                <button id="executescript">Execute script in inspected page</button>
-                <button id="insertscript">Insert script into inspected page</button>
-                <button id="insertmessagebutton">Insert button to send a message from page to devtools</button>
+            <div style={style}>
+                 <Inspector data={ source } />
             </div>
         );
     }

@@ -61,6 +61,7 @@ gulp.task('browserify-devtools', function(cb){
 gulp.task('browserify-app', function(cb){
     browserifyThoseApps({
         outfilePattern: 'app',
+        entry: './src/dom.js',
         externals: npmConfig.dependencies,
         isProd: false,
         watchFiles: true
@@ -77,25 +78,15 @@ gulp.task('browserify-vendor', function(cb){
     }, cb);
 });
 
-gulp.task('browserify-vendor-prod', function(cb){
-    browserifyThoseApps({
-        entry: './noop.js',
-        outfilePattern: 'vendor',
-        dependencies: npmConfig.dependencies
-    }, cb);
-});
-
 gulp.task('browserify-prod-app', function(cb){
     browserifyThoseApps({
-        outfilePattern: 'app',
-        externals: npmConfig.dependencies
+        outfilePattern: 'bundleApp'
     }, cb);
 });
 
 gulp.task('browserify-prod-devtools', function(cb){
     browserifyThoseApps({
-        outfilePattern: 'devtools',
-        externals: npmConfig.dependencies
+        outfilePattern: 'bundleDevtools'
     }, cb);
 });
 
@@ -151,11 +142,12 @@ gulp.task('install', ['lint', 'test'], function() {
 
 // Composite tasks
 gulp.task('qa-prod', ['qa-uglify', 'scss']);
-gulp.task('prod', ['browserify-vendor-prod', 'browserify-prod-devtools', 'browserify-prod-react', 'scss']);
+gulp.task('prod', ['browserify-prod-devtools', 'browserify-prod-react', 'scss']);
 gulp.task('main', ['install', 'clear', 'lint', 'browserify-devtools', 'browserify-react', 'browserify-vendor', 'test', 'sass', 'watch']);
 gulp.task('default', ['auto']);
 gulp.task('dev', ['main']);
 gulp.task('bb', ['browserify-app', 'browserify-devtools', 'browserify-vendor']);
+gulp.task('bbprod', ['browserify-prod-app', 'browserify-prod-devtools']);
 
 // clears previously bundled files for a build.
 function clear(fileNameBase) {
@@ -197,7 +189,7 @@ function browserifyThoseApps(options, cb) {
 
     if(watchFiles) {
         let watcher = watchify(bundler);
-        watcher.on('update', updateApp.bind(undefined, bundler, outfilePattern, isProd));
+        watcher.on('update', updateApp.bind(undefined, bundler, outfilePattern, isProd, function() {}));
         bundler = watcher;
     }
 
